@@ -12,13 +12,15 @@ import ProLayout, {
 import React, { useEffect } from 'react';
 import Link from 'umi/link';
 import { Dispatch } from 'redux';
-import { connect } from 'dva';
+// import { connect } from 'dva';
 import { formatMessage } from 'umi-plugin-react/locale';
+import enquire from 'enquire.js';
 
 import Authorized from '@/utils/Authorized';
 import RightContent from '@/components/GlobalHeader/RightContent';
-import { ConnectState } from '@/models/connect';
+// import { ConnectState } from '@/models/connect';
 import { isAntDesignPro } from '@/utils/utils';
+import connectFn from '@/utils/connectFn';
 import logo from '../assets/logo.svg';
 
 export interface BasicLayoutProps extends ProLayoutProps {
@@ -140,7 +142,52 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
   );
 };
 
-export default connect(({ global, settings }: ConnectState) => ({
-  collapsed: global.collapsed,
-  settings,
-}))(BasicLayout);
+@connectFn([{ global: ['collapsed', 'isMobile'] }, 'settings'])
+class BasicLayoutContainer extends React.PureComponent<BasicLayoutProps> {
+  // 订阅媒体查询
+  componentDidMount() {
+    this.queryMedia();
+  }
+
+  // 卸载事件
+  componentWillUnmount() {
+    enquire.unregister('screen and (max-width:767.99px)')
+  }
+
+  // 查询media
+  queryMedia = () => {
+    const { dispatch } = this.props;
+    const body = document.querySelector('body');
+    enquire.register('screen and (max-width:767.99px)', {
+      match() {
+        dispatch({
+          type: 'global/changeIsMobile',
+          payload: true,
+        })
+        if (body && !body.classList.contains('page-mobile')) {
+          body.classList.add('page-mobile')
+        }
+      },
+      unmatch() {
+        dispatch({
+          type: 'global/changeIsMobile',
+          payload: false,
+        })
+        if (body && body.classList.contains('page-mobile')) {
+          body.classList.remove('page-mobile')
+        }
+      },
+      destroy() {},
+    });
+  }
+
+  render() {
+    return <BasicLayout {...this.props}></BasicLayout>
+  }
+}
+
+export default BasicLayoutContainer
+// export default connect(({ global, settings }: ConnectState) => ({
+//   collapsed: global.collapsed,
+//   settings,
+// }))(BasicLayoutContainer);

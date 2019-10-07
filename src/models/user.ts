@@ -19,6 +19,7 @@ export interface CurrentUser {
 
 export interface UserModelState {
   currentUser?: CurrentUser;
+  isLogin?: boolean;
 }
 
 export interface UserModelType {
@@ -39,6 +40,7 @@ const UserModel: UserModelType = {
 
   state: {
     currentUser: {},
+    isLogin: false,
   },
 
   effects: {
@@ -62,6 +64,7 @@ const UserModel: UserModelType = {
     saveCurrentUser(state, action) {
       return {
         ...state,
+        isLogin: !!action.payload.name,
         currentUser: action.payload || {},
       };
     },

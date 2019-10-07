@@ -13,7 +13,8 @@ export interface NoticeItem extends NoticeIconData {
 
 export interface GlobalModelState {
   collapsed: boolean;
-  isLoading?: boolean;
+  isMobile?: boolean; // 是否为手机
+  permissions?: string[]; // 后台返回的权限列表
   notices: NoticeItem[];
 }
 
@@ -27,7 +28,7 @@ export interface GlobalModelType {
   };
   reducers: {
     changeLayoutCollapsed: Reducer<GlobalModelState>;
-    changeIsLoading: Reducer<GlobalModelState>;
+    changeIsMobile: Reducer<GlobalModelState>;
     saveNotices: Reducer<GlobalModelState>;
     saveClearedNotices: Reducer<GlobalModelState>;
   };
@@ -39,7 +40,8 @@ const GlobalModel: GlobalModelType = {
 
   state: {
     collapsed: false,
-    isLoading: false,
+    isMobile: false,
+    permissions: [],
     notices: [],
   },
 
@@ -111,14 +113,15 @@ const GlobalModel: GlobalModelType = {
         collapsed: payload,
       };
     },
-    changeIsLoading(state = {
+    // 改变是否为手机状态
+    changeIsMobile(state = {
       notices: [],
       collapsed: true,
-      isLoading: false,
+      isMobile: false,
     }, { payload }): GlobalModelState {
       return {
         ...state,
-        isLoading: payload,
+        isMobile: payload,
       };
     },
     saveNotices(state, { payload }): GlobalModelState {

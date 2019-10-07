@@ -1,0 +1,104 @@
+.create-drawer {
+  &-mark {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 998;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0,0,0,.65);
+    opacity: .6;
+  }
+  &-body.open {
+    top: 0;
+    right: 0;
+  }
+
+  &-body.closed {
+    top: 0;
+    right: -265px;
+  }
+
+  &-body {
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    width: 265px;
+    height: 100vh;
+    max-height: 100vh;
+    background: #fff;
+    box-shadow: -2px 0 10px rgba(0,0,0,0.15);
+    opacity: 1;
+    transition: right 0.3s ease-in-out;
+
+    &-text {
+      position: absolute;
+      top: calc(50% - 35px);
+      left: -20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 70px;
+      color: #717070;
+      font-size: 14px;
+      text-align: center;
+      background: #fff;
+      border: 1px solid #ececec;
+      border-right: 0;
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+      cursor: pointer;
+    }
+
+    &-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      color: #000;
+      border-bottom: 1px solid #ddd;
+
+      &__icon {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+      }
+    }
+
+    &-content {
+      box-sizing: border-box;
+      padding: 20px 15px;
+      .ant-form-item-label {
+        padding-top: 0;
+        label {
+          margin-bottom: 0;
+        }
+        label::after {
+          display: inline-block;
+        }
+      }
+      .ant-form-inline .ant-form-item {
+        width: 100%;
+        margin-right: 0;
+      }
+      .ant-form-inline .st-from-group-symbol {
+        width: auto;
+        margin-right: 0;
+        .ant-form-item {
+          width: auto;
+        }
+      }
+    }
+  }
+
+  .st-date-picker-input {
+    text-align: center;
+  }
+}

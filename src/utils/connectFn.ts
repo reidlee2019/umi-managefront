@@ -1,15 +1,14 @@
+/**
+ * 公用connect方法
+ */
 import { connect } from 'dva';
 import actions from '@/services/actions';
 import { ConnectState, GlobalState } from '@/models/connect';
 import { types } from '@/utils/utils';
 
-/**
- * connectFn 方法
- * @param paramDisptch
- * @param paramState
- */
 const connectFn = (paramState?: any[], paramDisptch?: any[]) => {
   const actionObj: GlobalState = {};
+  // 将所有请求方法同步到action之中
   if (paramDisptch) {
     paramDisptch.map((item: string) => {
       if (actions.hasOwnProperty(item)) {

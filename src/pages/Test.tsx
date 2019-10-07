@@ -1,15 +1,16 @@
 import React from 'react';
+import { Button } from 'antd';
 import connectFn from '@/utils/connectFn';
 import { ConnectProps } from '@/models/connect';
+import WithElementAuth from '@/components/WithElementAuth';
+import CreateCard from '@/components/CreateCard';
+
+const WithBtn = WithElementAuth(Button);
 
 @connectFn(['login'], ['fakeAccountLogin'])
 class Test extends React.PureComponent<ConnectProps> {
   handleClick = () => {
     const { dispatch } = this.props;
-    // fakeAccountLogin({ userName: 'admin', password: '123456' })
-    //   .then((res: any) => {
-    //     console.log(res)
-    //   })
     if (dispatch) {
       dispatch({
         type: 'global/changeIsLoading',
@@ -20,7 +21,13 @@ class Test extends React.PureComponent<ConnectProps> {
 
   render() {
     return (
-      <p onClick={this.handleClick}>12312312</p>
+      <CreateCard
+        addAuth
+        {...this.props}
+      >
+        <p onClick={this.handleClick}>12312312</p>
+        {/* <WithBtn auth="true">1313</WithBtn> */}
+      </CreateCard>
     )
   }
 }

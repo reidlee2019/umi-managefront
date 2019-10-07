@@ -1,0 +1,43 @@
+{
+  "editor.fontFamily": "Fira Code",//后边的引号中写上要设置的字体类型，个人比较喜欢Fira Code
+  "editor.fontLigatures": false,//这个控制是否启用字体连字，true启用，false不启用
+  "editor.fontSize": 14,//设置字体大小，这个不多说都明白
+  "editor.fontWeight": "normal",//这个设置字体粗细，可选normal,bold,"100"~"900"等，选择合适的就行 
+  "javascript.implicitProjectConfig.experimentalDecorators": true,//去掉装饰器报错
+  "workbench.startupEditor": "welcomePage",
+  "editor.tabSize": 2,
+  "eslint.autoFixOnSave": true,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    {
+      "language": "html",
+      "autoFix": true
+    },
+    {
+      "language": "vue",
+      "autoFix": true
+    },
+    { "language": "typescript", "autoFix": true },
+    { "language": "typescriptreact", "autoFix": true } 
+  ],
+  "eslint.options": {
+    "extensinons": [".ts", ".js", ".tsx", ".jsx"]
+  },
+  "window.zoomLevel": 1,
+  "workbench.iconTheme": "vscode-icons",
+  "fileheader.configObj": {
+    "autoAdd": false // 默认开启
+  },
+  "fileheader.customMade": {    //此为头部注释 ctrl+cmd+i
+    "Autor": "reid",
+    "description": ""
+  },
+  "fileheader.cursorMode": {  //此为函数注释 ctrl+cmd+t
+    "description":"",
+    "param": "Object",
+    "return": "Object"
+  },
+  "explorer.confirmDelete": false,
+  "tslint.autoFixOnSave": true
+}
