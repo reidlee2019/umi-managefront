@@ -4,10 +4,10 @@
 import React from 'react';
 import { Form } from 'antd';
 import classNames from 'classnames';
+import { FormComponentProps } from 'antd/es/form';
 import { GlobalState } from '@/models/connect';
 import Case from './Case';
 import connectFn from '@/utils/connectFn';
-import { FormComponentProps } from 'antd/es/form';
 
 interface CreateFormProps {
   formConfig?: any;
@@ -61,7 +61,7 @@ class CreateForm extends React.PureComponent<CreateFormProps, GlobalState> {
           {this.renderFormGroup()}
         </Form>
       </div>
-    )
+    );
   }
 }
 
