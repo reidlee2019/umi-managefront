@@ -2,11 +2,20 @@
  * 公用的表单组件
  */
 import React from 'react';
-// import classNames from 'classnames';
-// import { Form } from 'antd';
+import { Form } from 'antd';
+import classNames from 'classnames';
+import { GlobalState } from '@/models/connect';
+import Case from './Case';
+import connectFn from '@/utils/connectFn';
+import { FormComponentProps } from 'antd/es/form';
 
+interface CreateFormProps {
+  formConfig?: any;
+  form: FormComponentProps['form'];
+}
 
-class CreateForm extends React.PureComponent {
+@connectFn()
+class CreateForm extends React.PureComponent<CreateFormProps, GlobalState> {
   formItemLayout = {
     labelCol: {
       xs: { span: 24 },
@@ -16,25 +25,44 @@ class CreateForm extends React.PureComponent {
       xs: { span: 24 },
       sm: { span: 20 },
     },
+  };
+
+  renderFormItem(item: any) {
+    const { formConfig } = this.props;
+    return Case(item, formConfig, this);
   }
+
   // 渲染formGroup
-  // renderFormGroup(formConfig) {
-  //   return formConfig.config.map(item => {
-  //     if (item.options.hidden) {
-  //       return ''
-  //     }
-  //     return this.renderFormItem(item, formConfig)
-  //   })
-  // }
+  renderFormGroup = () => {
+    const { formConfig } = this.props;
+    return formConfig.config.map((item: any) => {
+      if (item.options.hidden) {
+        return ''
+      }
+      return this.renderFormItem(item)
+    })
+  };
 
   render() {
-    // const { formConfig } = this.props;
+    const { formConfig } = this.props;
+    let formItemLayout = formConfig.formItemLayout || {};
+    if (formConfig.isPop) {
+      formItemLayout = formConfig.formItemLayout ? formConfig.formItemLayout : this.formItemLayout;
+    }
     return (
-      <div>
-        12
+      <div className={classNames({
+        'm-form': !formConfig.isPop && !formConfig.className,
+        'm-form-pop': formConfig.isPop && !formConfig.className,
+      })}>
+        <Form
+          layout={formConfig.layout || 'inline'}
+          {...formItemLayout}
+        >
+          {this.renderFormGroup()}
+        </Form>
       </div>
     )
   }
 }
 
-export default CreateForm
+export default Form.create<CreateFormProps>({ name: 'create-form' })(CreateForm);
